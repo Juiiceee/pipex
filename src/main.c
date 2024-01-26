@@ -23,9 +23,17 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-void	error(char *str)
+void	pexrror(char *str)
 {
 	perror(str);
+	exit(0);
+}
+
+void	error(char *str)
+{
+	ft_putstr_fd("Error\n", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("\n", 2);
 	exit(0);
 }
 
@@ -123,23 +131,36 @@ void	checkcom(t_pipex *pipex, char **argv)
 	{
 		pipex->cmd1 = ft_strjoin("/bin/", argv[2]);
 		if (!pipex->cmd1)
-			error("ft_strjoin");
+			pexrror("ft_strjoin");
 	}
 	if (checkbin(argv[3]))
 	{
 		pipex->cmd2 = ft_strjoin("/bin/", argv[3]);
 		if (!pipex->cmd2)
-			error("ft_strjoin");
+			pexrror("ft_strjoin");
 	}
 	if (access(pipex->cmd1, X_OK) == -1 || access(pipex->cmd2, X_OK) == -1)
-		error("access");
+		pexrror("access");
 }
 
-char	*find_path(char **envp)
+char	*pathenv(char **env)
 {
-	while (ft_strncmp("PATH", *envp, 4))
-		envp++;
-	return (*envp + 5);
+	while (ft_strncmp("PATH", *env, 4))
+		env++;
+	return (*env + 5);
+}
+
+void	freetab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }
 
 int main(int argc, char *argv[], char *env[])
@@ -148,16 +169,20 @@ int main(int argc, char *argv[], char *env[])
 
 	//char	*argv[] = {"sa", "coucou", "ls", "cc"};
 	pipex.infile = open(argv[1], O_RDONLY);
-	if (pipex.infile == -1)
-		error("open infile");
-	pipex.outfile = open(argv[5], O_RDWR | O_CREAT | O_TRUNC);
-	if (pipex.outfile == -1)
-		error("open outfile");
+	if (pipex.infile < 0)
+		pexrror("open infile");
+	pipex.outfile = open(argv[4], O_TRUNC | O_CREAT | O_RDWR, 0000644);
+	if (pipex.outfile < 0)
+		pexrror("open outfile");
 	if (pipe(pipex.pipe) == -1)
-		error("pipe");
+		pexrror("pipe");
+	pipex.envpath = ft_split(pathenv(env), ':');
+	if (!pipex.envpath)
+		error("split");
 	
 	//checkcom(&pipex, argv);
 	/*if (execve(pipex.cmd1, argv + 1, env) == -1)
 		perror("execve");*/
+	freetab(pipex.envpath);
 	return 0;
 }
