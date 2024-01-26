@@ -127,19 +127,18 @@ int	checkbin(char *str)
 
 void	checkcom(t_pipex *pipex, char **argv)
 {
-	if (checkbin(argv[2]))
+	int	i;
+
+	i = 0;
+	if (access(pipex->cmd1, X_OK) == -1)
 	{
-		pipex->cmd1 = ft_strjoin("/bin/", argv[2]);
-		if (!pipex->cmd1)
-			pexrror("ft_strjoin");
+		while (pipex->envpath[i])
+		{
+			if (access(ft_strjoin(pipex->envpath[i])))
+			i++;
+		}
 	}
-	if (checkbin(argv[3]))
-	{
-		pipex->cmd2 = ft_strjoin("/bin/", argv[3]);
-		if (!pipex->cmd2)
-			pexrror("ft_strjoin");
-	}
-	if (access(pipex->cmd1, X_OK) == -1 || access(pipex->cmd2, X_OK) == -1)
+	if (access(pipex->cmd2, X_OK) == -1)
 		pexrror("access");
 }
 
@@ -163,6 +162,24 @@ void	freetab(char **tab)
 	free(tab);
 }
 
+void	parsingcommand(t_pipex *pipex, char **argv)
+{
+	pipex->cmd1 = ft_split(argv[2], ' ')[0];
+	if (!pipex->cmd1)
+		return (freetab(pipex->envpath), error("split"));
+	pipex->argcmd1 = ft_split(argv[2], ' ')[1];
+	if (!pipex->cmd1)
+		return (freetab(pipex->envpath), free(pipex->cmd1), error("split"));
+	pipex->cmd1 = ft_split(argv[3], ' ')[0];
+	if (!pipex->cmd1)
+		return (freetab(pipex->envpath), free(pipex->cmd1),
+			free(pipex->argcmd1), error("split"));
+	pipex->argcmd1 = ft_split(argv[3], ' ')[1];
+	if (!pipex->cmd1)
+		return (freetab(pipex->envpath),free(pipex->cmd1),
+			free(pipex->argcmd1), free(pipex->cmd2), error("split"));
+}
+
 int main(int argc, char *argv[], char *env[])
 {
 	t_pipex	pipex;
@@ -179,7 +196,7 @@ int main(int argc, char *argv[], char *env[])
 	pipex.envpath = ft_split(pathenv(env), ':');
 	if (!pipex.envpath)
 		error("split");
-	
+	parsingcommand(&pipex, argv);
 	//checkcom(&pipex, argv);
 	/*if (execve(pipex.cmd1, argv + 1, env) == -1)
 		perror("execve");*/
