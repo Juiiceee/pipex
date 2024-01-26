@@ -125,7 +125,7 @@ int	checkbin(char *str)
 	return (free(bin), 1);
 }
 
-void	checkcom(t_pipex *pipex, char **argv)
+/*void	checkcom(t_pipex *pipex, char **argv)
 {
 	int	i;
 
@@ -140,7 +140,7 @@ void	checkcom(t_pipex *pipex, char **argv)
 	}
 	if (access(pipex->cmd2, X_OK) == -1)
 		pexrror("access");
-}
+}*/
 
 char	*pathenv(char **env)
 {
@@ -162,22 +162,66 @@ void	freetab(char **tab)
 	free(tab);
 }
 
-void	parsingcommand(t_pipex *pipex, char **argv)
+/*void	lib(t_pipex *pipex)
 {
-	pipex->cmd1 = ft_split(argv[2], ' ')[0];
+	freetab(pipex->envpath);
+	free(pipex->argcmd1);
+	printf("pipex->argcmd1 = %s\n", pipex->argcmd1);
+	free(pipex->argcmd2);
+	printf("pipex->argcmd1 = %s\n", pipex->argcmd1);
+	free(pipex->cmd1);
+	printf("pipex->argcmd1 = %s\n", pipex->argcmd1);
+	free(pipex->cmd2);
+	printf("pipex->argcmd1 = %s\n", pipex->argcmd1);
+}*/
+
+int	parsingcommand(t_pipex *pipex, char **argv)
+{
+	char **tmp;
+	int		i;
+
+	i = 1;
+	tmp = ft_split(argv[2], ' ');
+	pipex->cmd1 = ft_strdup(tmp[0]);
 	if (!pipex->cmd1)
-		return (freetab(pipex->envpath), error("split"));
-	pipex->argcmd1 = ft_split(argv[2], ' ')[1];
-	if (!pipex->cmd1)
-		return (freetab(pipex->envpath), free(pipex->cmd1), error("split"));
-	pipex->cmd1 = ft_split(argv[3], ' ')[0];
-	if (!pipex->cmd1)
-		return (freetab(pipex->envpath), free(pipex->cmd1),
-			free(pipex->argcmd1), error("split"));
-	pipex->argcmd1 = ft_split(argv[3], ' ')[1];
-	if (!pipex->cmd1)
-		return (freetab(pipex->envpath),free(pipex->cmd1),
-			free(pipex->argcmd1), free(pipex->cmd2), error("split"));
+		return (0);
+	while (tmp[i])
+	{
+		pipex->argcmd1[i - 1] = ft_strdup(tmp[i]);
+		i++;
+	}
+	if (!pipex->argcmd1)
+		return (0);
+	i = 1;
+	tmp = ft_split(argv[3], ' ');
+	pipex->cmd2 = ft_strdup(tmp[0]);
+	if (!pipex->cmd2)
+		return (0);
+	while (tmp[i])
+	{
+		pipex->argcmd2[i - 1] = ft_strdup(tmp[i]);
+		i++;
+	}
+	if (!pipex->argcmd2)
+		return (0);
+	return (1);
+}
+
+void	addslash(t_pipex *pipex, char **env)
+{
+	int	i;
+
+	i = 0;
+	pipex->envpath = ft_split(pathenv(env), ':');
+	if (!pipex->envpath)
+		error("split");
+	while (pipex->envpath[i])
+	{
+		pipex->envpath[i] = ft_strjoin(pipex->envpath[i], "/");
+		if (!pipex->envpath[i])
+			return (freetab(pipex->envpath), error("strjoin"));
+		i++;
+	}
 }
 
 int main(int argc, char *argv[], char *env[])
@@ -193,13 +237,16 @@ int main(int argc, char *argv[], char *env[])
 		pexrror("open outfile");
 	if (pipe(pipex.pipe) == -1)
 		pexrror("pipe");
-	pipex.envpath = ft_split(pathenv(env), ':');
-	if (!pipex.envpath)
-		error("split");
+	addslash(&pipex, env);
 	parsingcommand(&pipex, argv);
 	//checkcom(&pipex, argv);
 	/*if (execve(pipex.cmd1, argv + 1, env) == -1)
 		perror("execve");*/
 	freetab(pipex.envpath);
+	//free(pipex.argcmd1);
+	//free(pipex.argcmd2);
+	free(pipex.cmd1);
+	free(pipex.cmd2);
+	//lib(&pipex);
 	return 0;
 }

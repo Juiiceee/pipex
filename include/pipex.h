@@ -15,9 +15,9 @@ typedef	struct s_pipex
 	int		pipe[2];
 	char	**envpath;
 	char	*cmd1;
-	char	*argcmd1;
+	char	**argcmd1;
 	char	*cmd2;
-	char	*argcmd2;
+	char	**argcmd2;
 	pid_t	pid1;
 	pid_t	pid2;
 }	t_pipex;
