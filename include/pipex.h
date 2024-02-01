@@ -14,12 +14,9 @@ typedef	struct s_pipex
 	int		infile;
 	int		pipe[2];
 	char	**envpath;
-	char	*cmd1;
-	char	**argcmd1;
-	char	*cmd2;
-	char	**argcmd2;
-	pid_t	pid1;
-	pid_t	pid2;
+	char	*cmd;
+	char	**argcmd;
+	pid_t	pid;
 }	t_pipex;
 
 char	**ft_split(char const *s, char c);

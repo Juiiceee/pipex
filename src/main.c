@@ -130,7 +130,7 @@ int	checkbin(char *str)
 	int	i;
 
 	i = 0;
-	if (access(pipex->cmd1, X_OK) == -1)
+	if (access(pipex->cmd, X_OK) == -1)
 	{
 		while (pipex->envpath[i])
 		{
@@ -165,44 +165,25 @@ void	freetab(char **tab)
 /*void	lib(t_pipex *pipex)
 {
 	freetab(pipex->envpath);
-	free(pipex->argcmd1);
-	printf("pipex->argcmd1 = %s\n", pipex->argcmd1);
+	free(pipex->argcmd);
+	printf("pipex->argcmd = %s\n", pipex->argcmd);
 	free(pipex->argcmd2);
-	printf("pipex->argcmd1 = %s\n", pipex->argcmd1);
-	free(pipex->cmd1);
-	printf("pipex->argcmd1 = %s\n", pipex->argcmd1);
+	printf("pipex->argcmd = %s\n", pipex->argcmd);
+	free(pipex->cmd);
+	printf("pipex->argcmd = %s\n", pipex->argcmd);
 	free(pipex->cmd2);
-	printf("pipex->argcmd1 = %s\n", pipex->argcmd1);
+	printf("pipex->argcmd = %s\n", pipex->argcmd);
 }*/
 
-int	parsingcommand(t_pipex *pipex, char **argv)
+int	parsingcommand(t_pipex *pipex, char **argv, int	nb)
 {
-	char **tmp;
-	int		i;
-
-	i = 1;
-	tmp = ft_split(argv[2], ' ');
-	pipex->cmd1 = ft_strdup(tmp[0]);
-	if (!pipex->cmd1)
+	pipex->argcmd = ft_split(argv[nb], ' ');
+	if (!pipex->argcmd)
 		return (0);
-	while (tmp[i])
-	{
-		pipex->argcmd1[i - 1] = ft_strdup(tmp[i]);
-		i++;
-	}
-	if (!pipex->argcmd1)
-		return (0);
-	i = 1;
-	tmp = ft_split(argv[3], ' ');
-	pipex->cmd2 = ft_strdup(tmp[0]);
-	if (!pipex->cmd2)
-		return (0);
-	while (tmp[i])
-	{
-		pipex->argcmd2[i - 1] = ft_strdup(tmp[i]);
-		i++;
-	}
-	if (!pipex->argcmd2)
+	pipex->cmd = ft_strdup(pipex->argcmd[0]);
+	if (!pipex->cmd)
+		return (free(pipex->argcmd), 0);
+	if (!pipex->argcmd)
 		return (0);
 	return (1);
 }
@@ -224,6 +205,16 @@ void	addslash(t_pipex *pipex, char **env)
 	}
 }
 
+void	fprocess(t_pipex pipex, char **argv, char **env)
+{
+	dup2(pipex.pipe[0], 0);
+	close(pipex.pipe[0]);
+	dup2(pipex.pipe[1], 1);
+	if (parsingcommand(&pipex, argv, 3) == 0)
+		return ;
+	execve(pipex.cmd, pipex.argcmd, env);
+}
+
 int main(int argc, char *argv[], char *env[])
 {
 	t_pipex	pipex;
@@ -232,21 +223,32 @@ int main(int argc, char *argv[], char *env[])
 	pipex.infile = open(argv[1], O_RDONLY);
 	if (pipex.infile < 0)
 		pexrror("open infile");
-	pipex.outfile = open(argv[4], O_TRUNC | O_CREAT | O_RDWR, 0000644);
+	pipex.outfile = open(argv[4], O_TRUNC | O_CREAT | O_RDWR, 0640);
 	if (pipex.outfile < 0)
 		pexrror("open outfile");
 	if (pipe(pipex.pipe) == -1)
 		pexrror("pipe");
 	addslash(&pipex, env);
-	parsingcommand(&pipex, argv);
+	while (*pipex.envpath)
+	{
+		printf("%s\n",*pipex.envpath);
+		pipex.envpath++;
+	}
 	//checkcom(&pipex, argv);
-	/*if (execve(pipex.cmd1, argv + 1, env) == -1)
+	/*if (execve(pipex.cmd, argv + 1, env) == -1)
 		perror("execve");*/
+
+	/*pipex.pid1 = fork();
+	if (pipex.pid1 == 0)
+	{
+		fprocess(pipex, argv, env);
+	}*/
+	parsingcommand(&pipex, argv, 2);
 	freetab(pipex.envpath);
-	//free(pipex.argcmd1);
+	//free(pipex.argcmd);
 	//free(pipex.argcmd2);
-	free(pipex.cmd1);
-	free(pipex.cmd2);
+	//free(pipex.cmd);
+	//free(pipex.cmd2);
 	//lib(&pipex);
 	return 0;
 }
