@@ -18,6 +18,7 @@ int main(int argc, char *argv[], char *env[])
 	t_pipex	pipex;
 
 	//char	*argv[] = {"sa", "coucou", "ls", "cc"};
+	//char *str[] = {"coucou", "/bin/ls -l"};
 	pipex.infile = open(argv[1], O_RDONLY);
 	if (pipex.infile < 0)
 		pexrror("open infile");
@@ -27,21 +28,14 @@ int main(int argc, char *argv[], char *env[])
 	if (pipe(pipex.pipe) == -1)
 		pexrror("pipe");
 	addslash(&pipex, env);
-	while (*pipex.envpath)
-	{
-		printf("%s\n",*pipex.envpath);
-		pipex.envpath++;
-	}
-	//checkcom(&pipex, argv);
-	/*if (execve(pipex.cmd, argv + 1, env) == -1)
-		perror("execve");*/
-
-	/*pipex.pid1 = fork();
-	if (pipex.pid1 == 0)
-	{
+	pipex.pid0 = fork();
+	if (pipex.pid0 == 0)
 		fprocess(pipex, argv, env);
-	}*/
-	parsingcommand(&pipex, argv, 2);
+	pipex.pid1 = fork();
+	if (pipex.pid1 == 0)
+		sprocess(pipex, argv, env);
+	waitpid(pipex.pid0, NULL, 0);
+	waitpid(pipex.pid1, NULL, 0);
 	freetab(pipex.envpath);
 	//free(pipex.argcmd);
 	//free(pipex.argcmd2);

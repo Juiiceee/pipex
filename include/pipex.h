@@ -16,7 +16,8 @@ typedef	struct s_pipex
 	char	**envpath;
 	char	*cmd;
 	char	**argcmd;
-	pid_t	pid;
+	pid_t	pid0;
+	pid_t	pid1;
 }	t_pipex;
 
 //ft_split.c
@@ -32,6 +33,7 @@ char	*pathenv(char **env);
 
 //process.c
 void	fprocess(t_pipex pipex, char **argv, char **env);
+void	sprocess(t_pipex pipex, char **argv, char **env);
 
 //error.c
 void	error(char *str);
