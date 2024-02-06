@@ -1,21 +1,31 @@
 #include "../include/pipex.h"
 
-void	fprocess(t_pipex pipex, char **argv, char **env)
+void	closepro(t_pipex *pipex)
 {
-	dup2(pipex.pipe[1], 1);
-	close(pipex.pipe[0]);
-	dup2(pipex.infile, 0);
-	if (parsingcommand(&pipex, argv, 2) == 0)
-		return ;
-	execve(pipex.cmd, pipex.argcmd, env);
+	closefile(pipex);
+	error(pipex->argcmd[0], "command not found");
+	freetab(pipex->argcmd);
+	exit(0);
 }
 
-void	sprocess(t_pipex pipex, char **argv, char **env)
+void	process(t_pipex pipex, char **argv, char **env, int nb)
 {
-	dup2(pipex.pipe[0], 0);
-	close(pipex.pipe[1]);
-	dup2(pipex.infile, 1);
-	if (parsingcommand(&pipex, argv, 3) == 0)
-		return ;
-	execve(pipex.cmd, pipex.argcmd, env);
+	if (nb == 0)
+	{
+		dup2(pipex.pipe[1], 1);
+		close(pipex.pipe[0]);
+		dup2(pipex.infile, 0);
+		if (parsingcommand(&pipex, argv, 2) == 0)
+			closepro(&pipex);
+		execve(pipex.cmd, pipex.argcmd, env);
+	}
+	else
+	{
+		dup2(pipex.pipe[0], 0);
+		close(pipex.pipe[1]);
+		dup2(pipex.outfile, 1);
+		if (parsingcommand(&pipex, argv, 3) == 0)
+			closepro(&pipex);
+		execve(pipex.cmd, pipex.argcmd, env);
+	}
 }

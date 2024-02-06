@@ -25,18 +25,18 @@ char	**ft_split(char const *s, char c);
 
 //main.c
 void	freetab(char **tab);
+void	closefile(t_pipex *pipex);
 
 //utilsprocess.c
 int		parsingcommand(t_pipex *pipex, char **argv, int	nb);
-void	addslash(t_pipex *pipex, char **env);
 char	*pathenv(char **env);
 
 //process.c
-void	fprocess(t_pipex pipex, char **argv, char **env);
+void	process(t_pipex pipex, char **argv, char **env, int nb);
 void	sprocess(t_pipex pipex, char **argv, char **env);
 
 //error.c
-void	error(char *str);
+void	error(char *str, char *raison);
 void	pexrror(char *str);
 
 //utils.c

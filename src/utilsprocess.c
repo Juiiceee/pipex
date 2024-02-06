@@ -2,30 +2,25 @@
 
 int	parsingcommand(t_pipex *pipex, char **argv, int	nb)
 {
+	char	*tmp;
+
 	pipex->argcmd = ft_split(argv[nb], ' ');
-	if (!pipex->argcmd)
-		return (0);
-	pipex->cmd = ft_strdup(pipex->argcmd[0]);
-	if (!pipex->cmd)
-		return (free(pipex->argcmd), 0);
-	return (1);
-}
-
-void	addslash(t_pipex *pipex, char **env)
-{
-	int	i;
-
-	i = 0;
-	pipex->envpath = ft_split(pathenv(env), ':');
-	if (!pipex->envpath)
-		error("split");
-	while (pipex->envpath[i])
+	if (access(pipex->argcmd[0], X_OK))
 	{
-		pipex->envpath[i] = ft_strjoin(pipex->envpath[i], "/");
-		if (!pipex->envpath[i])
-			return (freetab(pipex->envpath), error("strjoin"));
-		i++;
+		while (*pipex->envpath)
+		{
+			tmp = ft_strjoin(*pipex->envpath, "/");
+			pipex->cmd = ft_strjoin(tmp, pipex->argcmd[0]);
+			free(tmp);
+			if (!access(pipex->cmd, X_OK))
+				return (1);
+			free(pipex->cmd);
+			pipex->envpath++;
+		}
+		return (0);
 	}
+	pipex->cmd = ft_strdup(pipex->argcmd[0]);
+	return (1);
 }
 
 char	*pathenv(char **env)
