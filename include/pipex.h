@@ -23,20 +23,17 @@ typedef	struct s_pipex
 //ft_split.c
 char	**ft_split(char const *s, char c);
 
-//main.c
-void	freetab(char **tab);
-void	closefile(t_pipex *pipex);
-
-//utilsprocess.c
-int		parsingcommand(t_pipex *pipex, char **argv, int	nb);
-char	*pathenv(char **env);
-
 //process.c
 void	process(t_pipex pipex, char **argv, char **env, int nb);
+int		parsingcommand(t_pipex *pipex, char **argv, int	nb);
+char	*pathenv(char **env);
 
 //error.c
 void	error(char *str, char *raison);
 void	pexrror(char *str, t_pipex *pipex);
+void	closepipe(t_pipex *pipex);
+void	freetab(char **tab);
+void	closefile(t_pipex *pipex);
 
 //utils.c
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
