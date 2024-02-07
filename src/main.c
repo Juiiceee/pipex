@@ -33,12 +33,12 @@ int main(int argc, char *argv[], char *env[])
 		return (0);
 	pipex.infile = open(argv[1], O_RDONLY);
 	if (pipex.infile < 0)
-		pexrror("open infile");
+		pexrror("open infile", &pipex);
 	pipex.outfile = open(argv[4], O_TRUNC | O_CREAT | O_RDWR, 0644);
 	if (pipex.outfile < 0)
-		pexrror("open outfile");
+		pexrror("open outfile", &pipex);
 	if (pipe(pipex.pipe) < 0)
-		pexrror("pipe");
+		pexrror("pipe", &pipex);
 	pipex.envpath = ft_split(pathenv(env), ':');
 	pipex.pid0 = fork();
 	if (pipex.pid0 == 0)

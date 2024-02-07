@@ -33,11 +33,10 @@ char	*pathenv(char **env);
 
 //process.c
 void	process(t_pipex pipex, char **argv, char **env, int nb);
-void	sprocess(t_pipex pipex, char **argv, char **env);
 
 //error.c
 void	error(char *str, char *raison);
-void	pexrror(char *str);
+void	pexrror(char *str, t_pipex *pipex);
 
 //utils.c
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
