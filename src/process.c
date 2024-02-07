@@ -17,7 +17,8 @@ void	process(t_pipex pipex, char **argv, char **env, int nb)
 		dup2(pipex.infile, 0);
 		if (parsingcommand(&pipex, argv, 2) == 0)
 			closepro(&pipex);
-		execve(pipex.cmd, pipex.argcmd, env);
+		if (execve(pipex.cmd, pipex.argcmd, env) == -1)
+			printf("NULL");
 	}
 	else
 	{
@@ -26,6 +27,7 @@ void	process(t_pipex pipex, char **argv, char **env, int nb)
 		dup2(pipex.outfile, 1);
 		if (parsingcommand(&pipex, argv, 3) == 0)
 			closepro(&pipex);
-		execve(pipex.cmd, pipex.argcmd, env);
+		if (execve(pipex.cmd, pipex.argcmd, env) == -1)
+			printf("NULL");
 	}
 }

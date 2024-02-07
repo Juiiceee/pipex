@@ -46,9 +46,9 @@ int main(int argc, char *argv[], char *env[])
 	pipex.pid1 = fork();
 	if (pipex.pid1 == 0)
 		process(pipex, argv, env, 1);
+	closepipe(&pipex);
 	waitpid(pipex.pid0, NULL, 0);
 	waitpid(pipex.pid1, NULL, 0);
-	closepipe(&pipex);
 	closefile(&pipex);
 	freetab(pipex.envpath);
 	return (0);
