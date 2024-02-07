@@ -6,7 +6,7 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:57:44 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/07 14:57:47 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/07 15:27:15 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	parsingcommand(t_pipex *pipex, char **argv, int nb)
 {
 	char	*tmp;
 
+	if (ft_strlen(argv[nb]) == 0)
+		return (0);
 	pipex->argcmd = ft_split(argv[nb], ' ');
 	if (access(pipex->argcmd[0], X_OK))
 	{
@@ -61,6 +63,8 @@ void	closepro(t_pipex *pipex, int nb)
 
 void	process(t_pipex pipex, char **argv, char **env, int nb)
 {
+	if ((int)ft_strlen(argv[nb + 2]) == 0)
+		exit (0);
 	if (nb == 0)
 	{
 		dup2(pipex.pipe[1], 1);
@@ -77,7 +81,7 @@ void	process(t_pipex pipex, char **argv, char **env, int nb)
 		close(pipex.pipe[1]);
 		dup2(pipex.outfile, 1);
 		if (parsingcommand(&pipex, argv, 3) == 0)
-			closepro(&pipex, 1);
+			closepro(&pipex, 0);
 		if (execve(pipex.cmd, pipex.argcmd, env) == -1)
 			closepro(&pipex, 1);
 	}
