@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/07 14:58:14 by lbehr             #+#    #+#             */
+/*   Updated: 2024/02/07 14:58:25 by lbehr            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PIPEX_H
 # define PIPEX_H
 
@@ -8,7 +20,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
-typedef	struct s_pipex
+typedef struct s_pipex
 {
 	int		outfile;
 	int		infile;
@@ -25,7 +37,7 @@ char	**ft_split(char const *s, char c);
 
 //process.c
 void	process(t_pipex pipex, char **argv, char **env, int nb);
-int		parsingcommand(t_pipex *pipex, char **argv, int	nb);
+int		parsingcommand(t_pipex *pipex, char **argv, int nb);
 char	*pathenv(char **env);
 
 //error.c

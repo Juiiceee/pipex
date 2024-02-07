@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/07 14:57:44 by lbehr             #+#    #+#             */
+/*   Updated: 2024/02/07 14:57:47 by lbehr            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/pipex.h"
 
-int	parsingcommand(t_pipex *pipex, char **argv, int	nb)
+int	parsingcommand(t_pipex *pipex, char **argv, int nb)
 {
 	char	*tmp;
 
