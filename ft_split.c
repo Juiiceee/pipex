@@ -6,7 +6,7 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 06:32:29 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/13 12:15:59 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/13 14:22:41 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ char	**ft_split(char const *s, char c)
 	int		word;
 	int		avancement;
 
+	if (!s)
+		return (NULL);
 	avancement = 0;
 	word = countword(s, c);
 	i = 0;
@@ -88,10 +90,12 @@ char	**ft_split(char const *s, char c)
 }
 /*int main()
 {
-	char *haystack = " Tripouille";
+	char *haystack = NULL;
 	char	**test;
 	int i = 0;
 	test = ft_split(haystack, ' ');
+	if (!test)
+		printf("coucou");
 	//test[0][3] = 'p';
 	//printf("%s\n",test[0]);
 	// while(test[i] != NULL)

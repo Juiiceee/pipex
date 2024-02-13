@@ -6,22 +6,20 @@
 #    By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/12 15:57:01 by lbehr             #+#    #+#              #
-#    Updated: 2024/02/13 12:23:01 by lbehr            ###   ########.fr        #
+#    Updated: 2024/02/13 14:18:25 by lbehr            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= pipex
 OBJ_DIR		:= obj
 SRCS		:= error.c ft_split.c main.c process.c utils.c utilsprocess.c
-SRCS		:= $(SRCS:%=%)
 OBJS		:= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 CC			:= cc
-NORM		:= norminette *.c *.h
-CFLAGS		:= -Wall -Wextra -Werror -g3
+CFLAGS		:= -Wall -Wextra -Werror -g3 -MMD -MP
 RM			:= rm -rf
 DIR_DUP		= mkdir -p $(@D)
 
-all		: norm $(NAME)
+all		: $(NAME)
 
 norm	:
 	$(NORM)
@@ -42,4 +40,6 @@ fclean	:	clean
 
 re		:	fclean all
 
-.PHONY: all clean fclean re norm
+.PHONY: all clean fclean re
+
+-include $(DEP)

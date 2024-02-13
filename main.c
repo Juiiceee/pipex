@@ -6,7 +6,7 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:55:42 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/13 12:15:59 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/13 14:31:51 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int	main(int argc, char *argv[], char *env[])
 	if (pipe(pipex.pipe) < 0)
 		pexrror("pipe", &pipex);
 	pipex.envpath = ft_split(pathenv(env), ':');
-	if (!pipex.envpath)
-		closefile(&pipex);
 	pipex.pid0 = fork();
 	if (pipex.pid0 == 0)
 		fprocess(pipex, argv, env);
