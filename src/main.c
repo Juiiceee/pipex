@@ -6,7 +6,7 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:55:42 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/13 10:41:48 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/13 12:13:12 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char *argv[], char *env[])
 	t_pipex	pipex;
 
 	if (argc != 5)
-		return (0);
+		return (write(2, "Ambiguous Arguments\n", 21), 0);
 	pipex.infile = open(argv[1], O_RDONLY);
 	if (pipex.infile < 0)
 		pexrror("open infile", &pipex);
