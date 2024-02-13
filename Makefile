@@ -6,7 +6,7 @@
 #    By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/12 15:57:01 by lbehr             #+#    #+#              #
-#    Updated: 2024/02/13 12:21:11 by lbehr            ###   ########.fr        #
+#    Updated: 2024/02/13 12:23:01 by lbehr            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS		:= error.c ft_split.c main.c process.c utils.c utilsprocess.c
 SRCS		:= $(SRCS:%=%)
 OBJS		:= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 CC			:= cc
-NORM		:= norminette *
+NORM		:= norminette *.c *.h
 CFLAGS		:= -Wall -Wextra -Werror -g3
 RM			:= rm -rf
 DIR_DUP		= mkdir -p $(@D)
