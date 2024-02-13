@@ -6,11 +6,11 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 06:32:29 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/06 10:34:40 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/13 12:15:59 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "pipex.h"
 
 int	countword(char const *s, char c)
 {

@@ -6,11 +6,11 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:31:44 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/13 10:38:33 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/13 12:15:59 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "pipex.h"
 
 int	parsingcommand(t_pipex *pipex, char **argv, int nb)
 {

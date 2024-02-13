@@ -6,11 +6,11 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:57:18 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/13 10:10:41 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/13 12:15:59 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "pipex.h"
 
 void	freetab(char **tab)
 {

@@ -6,18 +6,18 @@
 #    By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/12 15:57:01 by lbehr             #+#    #+#              #
-#    Updated: 2024/02/13 10:55:37 by lbehr            ###   ########.fr        #
+#    Updated: 2024/02/13 12:16:51 by lbehr            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:= bin/pipex
+NAME		:= pipex
 SRC_DIR		:= src
 OBJ_DIR		:= obj
 SRCS		:= error.c ft_split.c main.c process.c utils.c utilsprocess.c
 SRCS		:= $(SRCS:%=$(SRC_DIR)/%)
 OBJS		:= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 CC			:= cc
-NORM		:= norminette $(SRC_DIR)/*.c include/*
+NORM		:= norminette $(SRC_DIR)/*
 CFLAGS		:= -Wall -Wextra -Werror -g3
 RM			:= rm -rf
 DIR_DUP		= mkdir -p $(@D)
@@ -28,7 +28,6 @@ norm	:
 	$(NORM)
 
 $(NAME)	:	$(OBJS)
-	$(DIR_DUP)
 	$(CC) $(OBJS) -o $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -40,7 +39,6 @@ clean	:
 	$(RM) $(OBJ_DIR)
 
 fclean	:	clean
-	$(RM) bin
 
 re		:	fclean all
 
