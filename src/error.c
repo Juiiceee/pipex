@@ -6,7 +6,7 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:57:18 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/07 14:57:19 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/13 10:10:41 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ void	freetab(char **tab)
 	int	i;
 
 	i = 0;
-	while (tab[i])
+	while (tab && tab[i])
 	{
 		free(tab[i]);
 		i++;
 	}
-	free(tab);
+	if (tab)
+		free(tab);
 }
 
 void	closefile(t_pipex *pipex)

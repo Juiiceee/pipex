@@ -6,7 +6,7 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:58:14 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/07 14:58:25 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/13 10:41:39 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ typedef struct s_pipex
 char	**ft_split(char const *s, char c);
 
 //process.c
-void	process(t_pipex pipex, char **argv, char **env, int nb);
-int		parsingcommand(t_pipex *pipex, char **argv, int nb);
-char	*pathenv(char **env);
+void	fprocess(t_pipex pipex, char **argv, char **env);
+void	sprocess(t_pipex pipex, char **argv, char **env);
 
 //error.c
 void	error(char *str, char *raison);
@@ -53,5 +52,10 @@ char	*ft_strdup(char *src);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *s);
 void	ft_putstr_fd(char *s, int fd);
+
+//utlisprocess.c
+void	closepro(t_pipex *pipex, int nb);
+int		parsingcommand(t_pipex *pipex, char **argv, int nb);
+char	*pathenv(char **env);
 
 #endif
