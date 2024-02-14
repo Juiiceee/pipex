@@ -6,17 +6,17 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:55:42 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/14 09:46:16 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/14 13:57:49 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static	void	ft_end(t_pipex *pipex)
+static	void	ft_end(t_pipex *pipex, int *status)
 {
 	closepipe(pipex);
-	waitpid(pipex->pid0, NULL, 0);
-	waitpid(pipex->pid1, NULL, 0);
+	waitpid(pipex->pid0, status, 0);
+	waitpid(pipex->pid1, status, 0);
 	closefile(pipex);
 	freetab(pipex->envpath);
 }
@@ -31,6 +31,7 @@ static	void	erroroutfile(t_pipex *pipex)
 int	main(int argc, char *argv[], char *env[])
 {
 	t_pipex	pipex;
+	int		status;
 
 	if (argc != 5)
 		return (write(2, "Ambiguous Arguments\n", 21), 0);
@@ -49,6 +50,6 @@ int	main(int argc, char *argv[], char *env[])
 	pipex.pid1 = fork();
 	if (pipex.pid1 == 0)
 		sprocess(pipex, argv, env);
-	ft_end(&pipex);
-	return (0);
+	ft_end(&pipex, &status);
+	return (WEXITSTATUS(status));
 }
