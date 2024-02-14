@@ -6,7 +6,7 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:57:18 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/14 10:43:52 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/14 13:34:45 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,15 @@ void	pexrror(char *str, t_pipex *pipex)
 
 void	error(char *str, char *raison)
 {
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(raison, 2);
-	ft_putstr_fd("\n", 2);
+	char	*tmp1;
+	char	*tmp2;
+	char	*tmpgen;
+
+	tmp1 = ft_strjoin(str, ": ");
+	tmp2 = ft_strjoin(raison, "\n");
+	tmpgen = ft_strjoin(tmp1, tmp2);
+	write(2, tmpgen, ft_strlen(tmpgen));
+	free(tmp1);
+	free(tmp2);
+	free(tmpgen);
 }
