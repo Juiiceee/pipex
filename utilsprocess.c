@@ -6,7 +6,7 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:31:44 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/14 11:32:32 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/14 16:20:03 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ void	closepro(t_pipex *pipex, int nb)
 	closepipe(pipex);
 	if (nb == 0)
 	{
-		error(pipex->argcmd[0], "command not found");
+		error(pipex->argcmd[0], "Command not found");
 		freetab(pipex->argcmd);
 	}
 	else
 	{
-		error(pipex->argcmd[0], "command fail");
+		error(pipex->argcmd[0], "Command fail");
 		freetab(pipex->argcmd);
 	}
 	exit(127);

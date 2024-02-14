@@ -6,7 +6,7 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:57:18 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/14 13:34:45 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/14 16:18:22 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ void	freetab(char **tab)
 
 void	closefile(t_pipex *pipex)
 {
-	close(pipex->infile);
-	close(pipex->outfile);
+	if (pipex->infile >= 0)
+		close(pipex->infile);
+	if (pipex->infile >= 0)
+		close(pipex->outfile);
 }
 
 void	closepipe(t_pipex *pipex)

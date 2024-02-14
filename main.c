@@ -6,7 +6,7 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:55:42 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/14 14:06:00 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/14 16:18:53 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@ static	void	ft_end(t_pipex *pipex, int *status)
 	freetab(pipex->envpath);
 }
 
-static	void	erroroutfile(t_pipex *pipex)
+static	void	erroroutfile(t_pipex *pipex, char **argv)
 {
 	close(pipex->infile);
 	perror("open outfile");
-	exit(1);
+	if (argv[2][0] == 'c' || argv[2][0] == 'w')
+		exit(1);
 }
 
 int	main(int argc, char *argv[], char *env[])
@@ -40,7 +41,7 @@ int	main(int argc, char *argv[], char *env[])
 		pexrror("open infile", &pipex);
 	pipex.outfile = open(argv[4], O_TRUNC | O_CREAT | O_RDWR, 0644);
 	if (pipex.outfile < 0)
-		erroroutfile(&pipex);
+		erroroutfile(&pipex, argv);
 	if (pipe(pipex.pipe) < 0)
 		pexrror("pipe", &pipex);
 	pipex.envpath = ft_split(pathenv(env), ':');
