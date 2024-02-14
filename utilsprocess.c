@@ -6,7 +6,7 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:31:44 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/13 14:33:12 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/14 10:41:08 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,19 @@ int	parsingcommand(t_pipex *pipex, char **argv, int nb)
 
 char	*pathenv(char **env)
 {
-	while (ft_strncmp("PATH", *env, 4))
+	int	check;
+
+	check = 1;
+	if (!env)
+		return (NULL);
+	while (check && *env)
+	{
+		check = ft_strncmp("PATH", *env, 4);
 		env++;
-	return (*env + 5);
+	}
+	if (check == 0)
+		return (*env + 5);
+	return (NULL);
 }
 
 void	closepro(t_pipex *pipex, int nb)
@@ -62,5 +72,5 @@ void	closepro(t_pipex *pipex, int nb)
 		error(pipex->argcmd[0], "command fail");
 		freetab(pipex->argcmd);
 	}
-	exit(0);
+	exit(127);
 }

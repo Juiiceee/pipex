@@ -6,7 +6,7 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:57:18 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/13 12:15:59 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/14 10:43:52 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ void	closepipe(t_pipex *pipex)
 void	pexrror(char *str, t_pipex *pipex)
 {
 	if (pipex->infile < 0)
-		;
-	else if (pipex->outfile < 0)
-		close(pipex->infile);
+		pipex->infile = open("/dev/null", O_RDONLY);
 	else if (pipex->pipe < 0)
+	{
+		perror(str);
 		closefile(pipex);
+		exit(1);
+	}
 	perror(str);
-	exit(0);
 }
 
 void	error(char *str, char *raison)

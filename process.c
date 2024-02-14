@@ -6,7 +6,7 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:57:44 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/13 14:50:49 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/14 09:51:16 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	fprocess(t_pipex pipex, char **argv, char **env)
 		closefile(&pipex);
 		closepipe(&pipex);
 		freetab(pipex.envpath);
-		exit (0);
+		exit (127);
 	}
 	if (pipex.infile > 0)
 		
@@ -42,7 +42,7 @@ void	sprocess(t_pipex pipex, char **argv, char **env)
 		closefile(&pipex);
 		closepipe(&pipex);
 		freetab(pipex.envpath);
-		exit (0);
+		exit (127);
 	}
 	dup2(pipex.pipe[0], 0);
 	close(pipex.pipe[1]);
