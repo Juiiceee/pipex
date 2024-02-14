@@ -6,7 +6,7 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:31:44 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/14 10:41:08 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/14 11:32:32 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ char	*pathenv(char **env)
 		return (NULL);
 	while (check && *env)
 	{
-		check = ft_strncmp("PATH", *env, 4);
 		env++;
+		check = ft_strncmp("PATH", *env, 4);
 	}
 	if (check == 0)
 		return (*env + 5);

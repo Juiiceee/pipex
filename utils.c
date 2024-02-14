@@ -6,7 +6,7 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:57:34 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/13 12:15:59 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/14 11:58:52 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ char	*ft_strdup(char *src)
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
+	if (!s2)
+		return (-1);
 	while ((*s1 || *s2) && (n > 0))
 	{
 		if (*s1 != *s2)
