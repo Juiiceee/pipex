@@ -6,7 +6,7 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 10:31:44 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/20 18:48:51 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/24 11:23:05 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	parsingcommand(t_pipex *pipex, char **argv, int nb)
 		return (0);
 	pipex->argcmd = ft_split(argv[nb], ' ');
 	if (access(pipex->argcmd[0], X_OK))
-	{
+	{ 
 		if (!pipex->envpath)
 			return (0);
 		while (pipex->envpath[i])
