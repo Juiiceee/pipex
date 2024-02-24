@@ -6,7 +6,7 @@
 /*   By: lbehr <lbehr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:57:44 by lbehr             #+#    #+#             */
-/*   Updated: 2024/02/24 11:27:34 by lbehr            ###   ########.fr       */
+/*   Updated: 2024/02/24 11:27:49 by lbehr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	sprocess(t_pipex pipex, char **argv, char **env)
 		freetab(pipex.envpath);
 		error(" ", "Command not found");
 		exit (127);
-	} 
+	}
 	dup2(pipex.pipe[0], 0);
 	close(pipex.pipe[1]);
 	dup2(pipex.outfile, 1);
